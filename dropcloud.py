@@ -57,3 +57,15 @@ if __name__ == "__main__":
 
         os.symlink(docs[doc], os.path.join(DROPBOX_PATH, doc))
         print("Symlinking %s" % doc)
+
+    # Delete symlinks that aren't needed anymore
+    links = os.listdir(DROPBOX_PATH)
+    for link in links:
+        if link not in docs:
+            # Make sure it's not a directory or something
+            if os.path.isdir(os.path.join(DROPBOX_PATH, link)):
+                continue
+
+            # Remove the lint!
+            os.remove(os.path.join(DROPBOX_PATH, link))
+            print("Removing %s" % link)
